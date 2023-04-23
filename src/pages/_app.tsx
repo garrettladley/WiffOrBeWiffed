@@ -12,11 +12,13 @@ const MyApp: AppType = ({ Component, pageProps }) => {
     <ClerkProvider {...pageProps}>
       <Head>
         <title>Wiff Or Be Wiffed</title>
+        <meta name="og:title" content="Wiff Or Be Wiffed" />
         <meta name="og:description" content="Wiff Or Be Wiffed" />
         <meta
           property="og:image"
           content="assets/ball-art/white-ball-transparent-bg.png"
         />
+        <meta property="og:image:alt" content="Wiff Or Be Wiffed Logo" />
         <meta property="og:image:type" content="image/png" />
         <meta property="og:image:width" content="376" />
         <meta property="og:image:height" content="376" />
