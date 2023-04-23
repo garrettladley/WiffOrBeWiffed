@@ -12,9 +12,9 @@ const MyApp: AppType = ({ Component, pageProps }) => {
     <ClerkProvider {...pageProps}>
       <Head>
         <title>Wiff Or Be Wiffed</title>
-        <meta name="description" content="Wiff Or Be Wiffed" />
+        <meta name="og:description" content="Wiff Or Be Wiffed" />
         <meta
-          property="image"
+          property="og:image"
           content="assets/ball-art/white-ball-transparent-bg.png"
         />
         <link rel="icon" href="favicon/favicon.ico" />
