@@ -13,6 +13,10 @@ const MyApp: AppType = ({ Component, pageProps }) => {
       <Head>
         <title>Wiff Or Be Wiffed</title>
         <meta name="description" content="Wiff Or Be Wiffed" />
+        <meta
+          property="image"
+          content="assets/ball-art/white-ball-transparent-bg.png"
+        />
         <link rel="icon" href="favicon/favicon.ico" />
       </Head>
       <Toaster position="bottom-center" />
