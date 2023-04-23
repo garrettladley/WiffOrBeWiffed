@@ -17,6 +17,9 @@ const MyApp: AppType = ({ Component, pageProps }) => {
           property="og:image"
           content="assets/ball-art/white-ball-transparent-bg.png"
         />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:image:width" content="376" />
+        <meta property="og:image:height" content="376" />
         <link rel="icon" href="favicon/favicon.ico" />
       </Head>
       <Toaster position="bottom-center" />
