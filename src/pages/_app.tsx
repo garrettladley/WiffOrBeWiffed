@@ -1,11 +1,24 @@
-import { type AppType } from "next/app";
+import type { AppType } from "next/app";
+import '~/styles/globals.css';
 
-import { api } from "~/utils/api";
+import Head from 'next/head';
+import { Toaster } from 'react-hot-toast';
+import { api } from '~/utils/api';
 
-import "~/styles/globals.css";
+import { ClerkProvider } from '@clerk/nextjs';
 
 const MyApp: AppType = ({ Component, pageProps }) => {
-  return <Component {...pageProps} />;
+  return (
+    <ClerkProvider {...pageProps}>
+      <Head>
+        <title>Wiff Or Be Wiffed</title>
+        <meta name="description" content="Wiff Or Be Wiffed" />
+        <link rel="icon" href="favicon/favicon.ico" />
+      </Head>
+      <Toaster position="bottom-center" />
+      <Component {...pageProps} />
+    </ClerkProvider>
+  );
 };
 
 export default api.withTRPC(MyApp);
