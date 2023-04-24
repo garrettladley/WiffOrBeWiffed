@@ -1,11 +1,13 @@
 import Image from 'next/image';
-import { useRouter } from 'next/router';
+import { NextRouter, useRouter } from 'next/router';
 import React, { useState } from 'react';
 
 import { SignInButton, useUser } from '@clerk/nextjs';
 import { Transition } from '@headlessui/react';
 
 import type { PropsWithChildren } from "react";
+
+const imageDimensions = 56;
 
 const Profile = () => {
   const { user, isSignedIn } = useUser();
@@ -25,8 +27,8 @@ const Profile = () => {
             src={user.profileImageUrl}
             alt="Profile Image"
             className="h-10 w-10 rounded-full"
-            width={56}
-            height={56}
+            width={imageDimensions}
+            height={imageDimensions}
           />
         </div>
       )}
@@ -39,25 +41,28 @@ const routes = [
   { href: "/baz", label: "Baz" },
 ];
 
-const isActiveBig = (href: string) => {
+const isActiveBig = (router: NextRouter, href: string) => {
   const activeStyles =
     "rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700";
   const inactiveStyles =
     "rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white";
-  return useRouter().pathname === href ? activeStyles : inactiveStyles;
+  return router.pathname === href ? activeStyles : inactiveStyles;
 };
 
-const isActiveSmall = (href: string) => {
+const isActiveSmall = (router: NextRouter, href: string) => {
   const activeStyles =
     "block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-gray-700";
   const inactiveStyles =
     "block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white";
-  return useRouter().pathname === href ? activeStyles : inactiveStyles;
+  return router.pathname === href ? activeStyles : inactiveStyles;
 };
 
-function renderRoutes(isActiveFn: (href: string) => string) {
+function renderRoutes(
+  router: NextRouter,
+  isActiveFn: (router: NextRouter, href: string) => string
+) {
   return routes.map((route) => (
-    <a href={route.href} className={isActiveFn(route.href)}>
+    <a href={route.href} className={isActiveFn(router, route.href)}>
       {route.label}
     </a>
   ));
@@ -68,17 +73,23 @@ const wiffleBall = (
     <Image
       src="/assets/ball-art/white-ball-transparent-bg.png"
       alt="Ball"
-      width={56}
-      height={56}
+      width={imageDimensions}
+      height={imageDimensions}
     />
   </div>
 );
 
-const bigRoutes = (
+const bigRoutes = (router: NextRouter) => (
   <div className="hidden md:block">
     <div className="ml-10 flex items-baseline space-x-4">
-      {renderRoutes(isActiveBig)}
+      {renderRoutes(router, isActiveBig)}
     </div>
+  </div>
+);
+
+const smallRoutes = (router: NextRouter) => (
+  <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
+    {renderRoutes(router, isActiveSmall)}
   </div>
 );
 
@@ -121,6 +132,8 @@ export const PageLayout = (props: PropsWithChildren) => {
 
   const { isLoaded: userLoaded } = useUser();
 
+  const router = useRouter();
+
   if (!userLoaded) return <div />;
 
   return (
@@ -131,7 +144,7 @@ export const PageLayout = (props: PropsWithChildren) => {
             <div className="flex h-16 items-center justify-between">
               <div className="flex items-center">
                 {wiffleBall}
-                {bigRoutes}
+                {bigRoutes(router)}
                 <div className="absolute right-0 flex items-center justify-center p-4 text-xl">
                   {socials.map((social) => (
                     <div className="flex items-center justify-center p-2">
@@ -198,9 +211,7 @@ export const PageLayout = (props: PropsWithChildren) => {
             leaveTo="opacity-0 scale-95"
           >
             <div className="md:hidden" id="mobile-menu">
-              <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
-                {renderRoutes(isActiveSmall)}
-              </div>
+              {smallRoutes(router)}
             </div>
           </Transition>
         </nav>
