@@ -6,6 +6,7 @@ import { Toaster } from 'react-hot-toast';
 import { api } from '~/utils/api';
 
 import { ClerkProvider } from '@clerk/nextjs';
+import { Analytics } from '@vercel/analytics/react';
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
@@ -25,6 +26,7 @@ const MyApp: AppType = ({ Component, pageProps }) => {
         <link rel="icon" href="favicon/favicon.ico" />
       </Head>
       <Toaster position="bottom-center" />
+      <Analytics />
       <Component {...pageProps} />
     </ClerkProvider>
   );
