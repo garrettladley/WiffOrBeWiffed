@@ -1,10 +1,11 @@
 import Image from 'next/image';
-import { NextRouter, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 
 import { SignInButton, useUser } from '@clerk/nextjs';
 import { Transition } from '@headlessui/react';
 
+import type { NextRouter } from "next/router";
 import type { PropsWithChildren } from "react";
 
 const imageDimensions = 56;
@@ -61,8 +62,8 @@ function renderRoutes(
   router: NextRouter,
   isActiveFn: (router: NextRouter, href: string) => string
 ) {
-  return routes.map((route) => (
-    <a href={route.href} className={isActiveFn(router, route.href)}>
+  return routes.map((route, index) => (
+    <a href={route.href} className={isActiveFn(router, route.href)} key={index}>
       {route.label}
     </a>
   ));
@@ -146,8 +147,11 @@ export const PageLayout = (props: PropsWithChildren) => {
                 {wiffleBall}
                 {bigRoutes(router)}
                 <div className="absolute right-0 flex items-center justify-center p-4 text-xl">
-                  {socials.map((social) => (
-                    <div className="flex items-center justify-center p-2">
+                  {socials.map((social, index) => (
+                    <div
+                      className="flex items-center justify-center p-2"
+                      key={index}
+                    >
                       <a href={social.href}>{social.svg}</a>
                     </div>
                   ))}

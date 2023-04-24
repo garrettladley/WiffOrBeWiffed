@@ -1,4 +1,4 @@
-import { NextPage } from 'next';
+import type { NextPage } from "next";
 import { PageLayout } from '~/components/layouts';
 
 const Home: NextPage = () => {
